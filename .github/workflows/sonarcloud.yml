@@ -1,6 +1,34 @@
+name: SonarCloud Analysis
+
 on:
   push:
     branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@v2
+        with:
+          args: >
+            -Dsonar.projectKey=your_project_key
+            -Dsonar.organization=your_org
+            -Dsonar.python.version=3.x
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
