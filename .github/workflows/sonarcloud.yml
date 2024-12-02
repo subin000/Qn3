@@ -21,7 +21,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install streamlit
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@v2
